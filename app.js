@@ -30,3 +30,14 @@ btnAddTask.addEventListener("click",function(event){
     txtTaskDescription.value= "";
     txtTaskDescription.focus();
 });
+ 
+function displayTasks(){
+    //bu function, her ihtiyaç duyulduğunda tüm görevleri yeniden okuyup ekranda göstermesi için.
+    taskList.innerHTML= "";
+    if (taskListArray.length == 0){
+        taskList.innerHTML= `<div class="alert alert-warning mb-0">Tanımlı görev yoktur</div>`;
+    } else{
+
+    }
+}
+displayTasks();
