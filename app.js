@@ -6,39 +6,6 @@ const btnClear = document.querySelectorAll("#filters span");
 
 
 
-let isEditMode = false; //Eğer bu değişken false ise Yeni Kayıt modundayız, true ise Düzenleme modundayız.
-let editedTaskId; //O anda hangi görev düzenleniyor ise uygulama boyunca geçerli olacak şekilde o görevin id'sini tutmaya yarar.
-let filterMode = "all";
-
-
-let taskListArray = [];
-
-
-
-//btnAddTask elementine click yapıldığında çalışacak fonksiyonun adı addTask'tir.
-btnAddTask.addEventListener("click", addTask);
-
-
-
-//btnClearAll elementine click yapıldığında çalışacak fonksiyonun adı clearAll'dur.
-btnClearAll.addEventListener("click", clearAll);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
