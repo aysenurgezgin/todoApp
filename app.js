@@ -9,6 +9,24 @@ let editedTaskId;
 let filterMode ="all";
 let taskListArray=[];
 
+btnAddTask.addEventListener("click", addTask);
+
+btnClear.addEventListener("click",clearAll);
+
+//Yeni görev ekleme;
+function addTask(event){
+    event.preventDefault();
+    let value = txtTaskDescription.value.trim();
+    if (value !=""){
+        let id =taskListArray.length== 0?1: taskListArray[taskListArray.length-1].id+1;
+        taskList.push(
+            {
+                
+            }
+        )
+    }
+}
+
 
 
 
