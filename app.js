@@ -35,6 +35,8 @@ function addTask(event){
     txtTaskDescription.focus();
 }
 
+//yeniden okuma;
+
 
 
 
