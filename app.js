@@ -4,8 +4,10 @@ const btnAddTask = document.getElementById("btn-add-task");
 const taskList = document.getElementById("task-list");
 const btnClear = document.querySelectorAll("#filters span");
 
-
-
+let isEditMode = false;
+let editedTaskId;
+let filterMode ="all";
+let taskListArray=[];
 
 
 
