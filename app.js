@@ -21,10 +21,18 @@ function addTask(event){
         let id =taskListArray.length== 0?1: taskListArray[taskListArray.length-1].id+1;
         taskList.push(
             {
-                
+                "id":id,
+                "taskDescription":value,
+                "status":"pending"
             }
-        )
+        );
+        displayTasks(filterMode);
+        setTasks();
+    }else{
+        alert("Görev açıklamasını boş bırakmayınız")
     }
+    txtTaskDescription.value ="";
+    txtTaskDescription.focus();
 }
 
 
