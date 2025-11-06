@@ -36,9 +36,35 @@ function addTask(event){
 }
 
 //yeniden okuma;
+function displayTasks(filter){
+    taskList.innerHTML= "";
+    if(taskListArray.length == 0){
+        taskList.innerHTML = `<div class="alert alert-warning mb-o">Tanımlı görev yoktur</div>`;
+    }else{
+        for(const task of taskListArray){
+            if(filter =="all"|| filter == task.status){
+                let completed =task.status == "completed"? "checked": "";
+                let taskLi=`
+                <li class="task list-gruop-item" id="${task.id}">
+                <div class=form-check d-flex justify-content-between align-items-center>         
+                 <input onclick="updateStatus(this);" type="checkbox" id="${task.id}" class="form-check-input" ${completed}>
+                        <div class="input-group">
+                            <input id="${task.id}" class="form-control ${completed}" type="text" value="${task.taskDescription}"
+                                disabled />
+                            <button onclick="editTask(this);" id="${task.id}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="deleteTask(this);" id="${task.id}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                </li>
+                ` ;
+                taskList.insertAdjacentElement("beforeend", taskLi);
+            };
+        };
+    };
+};
 
 
-
+//tamamlandı/devam ediyor
 
 
 
