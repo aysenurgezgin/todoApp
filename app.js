@@ -81,7 +81,16 @@ function updateStatus(activeTask){
 // görev düzenlenmesi;
 
 function editTask(clickedButton){
-    
+    editedTaskId = clickedButton.id;
+    let editedTaskId = clickedButton.previouseElementSibling;
+    let checked;
+    for(const task of taskListArray){
+        if(task.id == editedTaskId){
+            checked = task.status;
+            break;
+        };
+    }
+    if
 }
 
 
