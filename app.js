@@ -78,7 +78,11 @@ function updateStatus(activeTask){
     displayTasks(filterMode);
 }
 
+// görev düzenlenmesi;
 
+function editTask(clickedButton){
+    
+}
 
 
 
