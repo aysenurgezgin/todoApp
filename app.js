@@ -66,7 +66,17 @@ function displayTasks(filter){
 
 //tamamlandı/devam ediyor
 
-
+function updateStatus(activeTask){
+    let newStatus = activeTask.checked ? "compluted" : "pending";
+    for (const task of taskListArray){
+        if (activeTask.id == task.id){
+            task.status = newStatus;
+            break;
+        }
+    }
+    setTasks();
+    displayTasks(filterMode);
+}
 
 
 
