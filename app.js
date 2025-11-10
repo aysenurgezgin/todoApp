@@ -90,7 +90,11 @@ function editTask(clickedButton){
             break;
         };
     }
-    if
+    if(!isEditMode){
+        editTask.removeAttribute("disabled");
+        if(checked == "completed") editedTaskId.classList.remove("checked");
+        
+    }
 }
 
 
