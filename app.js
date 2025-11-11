@@ -81,24 +81,62 @@ function updateStatus(activeTask){
 // görev düzenlenmesi;
 
 function editTask(clickedButton){
-    editedTaskId = clickedButton.id;
-    let editedTaskId = clickedButton.previouseElementSibling;
+     editedTaskId = clickedButton.id;
+    let editedTask = clickedButton.previousElementSibling;
     let checked;
-    for(const task of taskListArray){
-        if(task.id == editedTaskId){
+    for (const task of taskListArray) {
+        if (task.id == editedTaskId) {
             checked = task.status;
             break;
         };
     }
-    if(!isEditMode){
-        editTask.removeAttribute("disabled");
-        if(checked == "completed") editedTaskId.classList.remove("checked");
-        
+    if (!isEditMode) {
+        editedTask.removeAttribute("disabled");
+        if (checked == "completed") editedTask.classList.remove("checked");
+        clickedButton.classList.remove("btn-warning");
+        clickedButton.classList.add("btn-info");
+        isEditMode = true;
+    } else {
+        editedTask.setAttribute("disabled", "disabled");
+        if (checked == "completed") editedTask.classList.add("checked");
+        clickedButton.classList.remove("btn-info");
+        clickedButton.classList.add("btn-warning");
+        clickedButton.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+        for (const task of taskListArray) {
+            if (editedTaskId == task.id) {
+                task.taskDescription = editedTask.value;
+                break;
+            }
+        }
+        isEditMode = false;
+        setTasks();
+        displayTasks(filterMode);
     }
+
 }
 
+// görevi siler
+function deleteTask(clickedButton) {
+    let deletedTaskId = clickedButton.id;
+    let deletedTask = taskListArray.filter(function (task) {
+        if (deletedTaskId == task.id) return true;
+    });
+    let deletedTaskDescription = deletedTask[0].taskDescription;
+    let answer = confirm(`'${deletedTaskDescription}' görevi silinecektir!`);
+    if (answer) {
+        let index = taskListArray.indexOf(deletedTask[0]);
+        taskListArray.splice(index, 1);
+        setTasks();
+        displayTasks(filterMode);
+        alert("Silme işlemi başarıyla tamamlanmıştır.");
+    }
+}
+//tüm görevleri siler
 
 
+getTasks();
+assignSpansEvents();
+displayTasks(filterMode);
 // const txtTaskDescription =document.getElementById("txt-task-description");
 // const btnAddTask =document.getElementById("btn-add-task");
 // const taskList = document.getElementById("task-list");
