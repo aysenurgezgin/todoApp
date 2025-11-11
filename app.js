@@ -132,7 +132,73 @@ function deleteTask(clickedButton) {
     }
 }
 //tüm görevleri siler
+function clearAll(){
+    let answer =confirm("Tüm görevler silinecektir!");
+    if (answer){
+        taskListArray.splice(0);
+        setTasks();
+        displayTasks(filterMode);
+    }
+}
 
+
+// Filters içindeki spanlara click eventlerini atar.
+function assignSpansEvents() {
+    for (const span of filters) {
+        span.addEventListener("click", function () {
+            let activeSpan = document.querySelector("span.active");
+            activeSpan.classList.remove("active");
+            span.classList.add("active");
+            filterMode = span.id;
+            displayTasks(filterMode);
+        });
+    };
+};
+document.getElementById("all").addEventListener("click",function(){
+
+});
+document.getElementById("completed").addEventListener("click", function () {
+
+});
+document.getElementById("pending").addEventListener("click", function () {
+
+});
+
+// LocalStorage'deki datamızı okuyup dizimizin içine aktaracak.
+function getTasks() {
+    // Task'lerimiz LocalStorage'de TaskList adında bir key'in içinde tutulacak.
+    let TaskListItem = localStorage.getItem("TaskList");
+
+    if (TaskListItem != null) {
+        taskListArray = JSON.parse(TaskListItem);
+    };
+};
+
+function setTasks() {
+    localStorage.setItem("TaskList", JSON.stringify(taskListArray));
+    console.log(JSON.stringify(taskListArray), typeof JSON.stringify(taskListArray));
+};
+
+getTasks();
+assignSpansEvents();
+displayTasks(filterMode);
+
+
+
+// LocalStorage'deki datamızı okuyup dizimizin içine aktaracak.
+function getTasks() {
+    // Task'lerimiz LocalStorage'de TaskList adında bir key'in içinde tutulacak.
+    let TaskListItem = localStorage.getItem("TaskList");
+
+    if (TaskListItem != null) {
+        taskListArray = JSON.parse(TaskListItem);
+    };
+};
+
+function setTasks() {
+    localStorage.setItem("TaskList", JSON.stringify(taskListArray));
+    console.log(JSON.stringify(taskListArray), typeof JSON.stringify(taskListArray));
+};
 
 getTasks();
 assignSpansEvents();
