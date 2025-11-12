@@ -1,53 +1,56 @@
 "use strict";
-const txtTaskDescription= document.getElementById("txt-task-description");
+const txtTaskDescription = document.getElementById("txt-task-description");
 const btnAddTask = document.getElementById("btn-add-task");
 const taskList = document.getElementById("task-list");
-const btnClear = document.querySelectorAll("#filters span");
+const btnClearAll = document.getElementById("btn-clear-all");
+const filters = document.querySelectorAll("#filters span");
 
-let isEditMode = false;
-let editedTaskId;
-let filterMode ="all";
-let taskListArray=[];
+
+let isEditMode = false; //Eğer bu değişken false ise Yeni Kayıt modundayız, true ise Düzenleme modundayız.
+let editedTaskId; //O anda hangi görev düzenleniyor ise uygulama boyunca geçerli olacak şekilde o görevin id'sini tutmaya yarar.
+let filterMode = "all";
+
+let taskListArray = [];
+
 
 btnAddTask.addEventListener("click", addTask);
+btnClearAll.addEventListener("click", clearAll);
 
-btnClear.addEventListener("click",clearAll);
 
-//Yeni görev ekleme;
-function addTask(event){
-    event.preventDefault();
+function addTask(event) {
+    event.preventDefault();//ilgili olayın default davranışlarını iptal ediyor.
     let value = txtTaskDescription.value.trim();
-    if (value !=""){
-        let id =taskListArray.length== 0?1: taskListArray[taskListArray.length-1].id+1;
-        taskList.push(
+    if (value != "") {
+        let id = taskListArray.length == 0 ? 1 : taskListArray[taskListArray.length - 1].id + 1;
+        taskListArray.push(
             {
-                "id":id,
-                "taskDescription":value,
-                "status":"pending"
+                "id": id,
+                "taskDescription": value,
+                "status": "pending"
             }
         );
         displayTasks(filterMode);
         setTasks();
-    }else{
-        alert("Görev açıklamasını boş bırakmayınız")
+    } else {
+        alert("Lütfen görev açıklamasını boş bırakmayınız.")
     }
-    txtTaskDescription.value ="";
+    txtTaskDescription.value = "";
     txtTaskDescription.focus();
 }
 
-//yeniden okuma;
-function displayTasks(filter){
-    taskList.innerHTML= "";
-    if(taskListArray.length == 0){
-        taskList.innerHTML = `<div class="alert alert-warning mb-o">Tanımlı görev yoktur</div>`;
-    }else{
-        for(const task of taskListArray){
-            if(filter =="all"|| filter == task.status){
-                let completed =task.status == "completed"? "checked": "";
-                let taskLi=`
-                <li class="task list-gruop-item" id="${task.id}">
-                <div class=form-check d-flex justify-content-between align-items-center>         
-                 <input onclick="updateStatus(this);" type="checkbox" id="${task.id}" class="form-check-input" ${completed}>
+
+function displayTasks(filter) {
+    taskList.innerHTML = "";
+    if (taskListArray.length == 0) {
+        taskList.innerHTML = `<div class="alert alert-warning mb-0">Tanımlı görev bulunmamaktadır.</div>`;
+    } else {
+        for (const task of taskListArray) {
+            if (filter == "all" || filter == task.status) {
+                let completed = task.status == "completed" ? "checked" : "";
+                let taskLi = `
+                <li class="task list-group-item" id="${task.id}">
+                    <div class="form-check d-flex justify-content-between align-items-center">
+                        <input onclick="updateStatus(this);" type="checkbox" id="${task.id}" class="form-check-input" ${completed}>
                         <div class="input-group">
                             <input id="${task.id}" class="form-control ${completed}" type="text" value="${task.taskDescription}"
                                 disabled />
@@ -56,20 +59,17 @@ function displayTasks(filter){
                         </div>
                     </div>
                 </li>
-                ` ;
-                taskList.insertAdjacentElement("beforeend", taskLi);
+            `;
+                taskList.insertAdjacentHTML("beforeend", taskLi);
             };
         };
     };
 };
 
-
-//tamamlandı/devam ediyor
-
-function updateStatus(activeTask){
-    let newStatus = activeTask.checked ? "compluted" : "pending";
-    for (const task of taskListArray){
-        if (activeTask.id == task.id){
+function updateStatus(activeTask) {
+    let newStatus = activeTask.checked ? "completed" : "pending";
+    for (const task of taskListArray) {
+        if (activeTask.id == task.id) {
             task.status = newStatus;
             break;
         }
@@ -78,10 +78,9 @@ function updateStatus(activeTask){
     displayTasks(filterMode);
 }
 
-// görev düzenlenmesi;
-
-function editTask(clickedButton){
-     editedTaskId = clickedButton.id;
+//görev düzenlenmesini yapar
+function editTask(clickedButton) {
+    editedTaskId = clickedButton.id;
     let editedTask = clickedButton.previousElementSibling;
     let checked;
     for (const task of taskListArray) {
@@ -95,6 +94,8 @@ function editTask(clickedButton){
         if (checked == "completed") editedTask.classList.remove("checked");
         clickedButton.classList.remove("btn-warning");
         clickedButton.classList.add("btn-info");
+        clickedButton.innerHTML = '<i class="fa-regular fa-circle-check"></i>';
+        editedTask.focus();
         isEditMode = true;
     } else {
         editedTask.setAttribute("disabled", "disabled");
@@ -115,7 +116,7 @@ function editTask(clickedButton){
 
 }
 
-// görevi siler
+//İlgili görevi siler
 function deleteTask(clickedButton) {
     let deletedTaskId = clickedButton.id;
     let deletedTask = taskListArray.filter(function (task) {
@@ -131,18 +132,18 @@ function deleteTask(clickedButton) {
         alert("Silme işlemi başarıyla tamamlanmıştır.");
     }
 }
-//tüm görevleri siler
-function clearAll(){
-    let answer =confirm("Tüm görevler silinecektir!");
-    if (answer){
+
+// görevleri siler
+function clearAll() {
+    let answer = confirm("Tüm görevler silinecektir!");
+    if (answer) {
+        // taskListArray = [];
         taskListArray.splice(0);
         setTasks();
         displayTasks(filterMode);
     }
 }
 
-
-// Filters içindeki spanlara click eventlerini atar.
 function assignSpansEvents() {
     for (const span of filters) {
         span.addEventListener("click", function () {
@@ -154,6 +155,7 @@ function assignSpansEvents() {
         });
     };
 };
+
 document.getElementById("all").addEventListener("click",function(){
 
 });
@@ -164,28 +166,7 @@ document.getElementById("pending").addEventListener("click", function () {
 
 });
 
-// LocalStorage'deki datamızı okuyup dizimizin içine aktaracak.
-function getTasks() {
-    // Task'lerimiz LocalStorage'de TaskList adında bir key'in içinde tutulacak.
-    let TaskListItem = localStorage.getItem("TaskList");
 
-    if (TaskListItem != null) {
-        taskListArray = JSON.parse(TaskListItem);
-    };
-};
-
-function setTasks() {
-    localStorage.setItem("TaskList", JSON.stringify(taskListArray));
-    console.log(JSON.stringify(taskListArray), typeof JSON.stringify(taskListArray));
-};
-
-getTasks();
-assignSpansEvents();
-displayTasks(filterMode);
-
-
-
-// LocalStorage'deki datamızı okuyup dizimizin içine aktaracak.
 function getTasks() {
     // Task'lerimiz LocalStorage'de TaskList adında bir key'in içinde tutulacak.
     let TaskListItem = localStorage.getItem("TaskList");
