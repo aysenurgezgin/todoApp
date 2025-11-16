@@ -18,7 +18,7 @@ btnClearAll.addEventListener("click", clearAll);
 
 
 function addTask(event) {
-    event.preventDefault();//ilgili olayın default davranışlarını iptal ediyor.
+    event.preventDefault();
     let value = txtTaskDescription.value.trim();
     if (value != "") {
         let id = taskListArray.length == 0 ? 1 : taskListArray[taskListArray.length - 1].id + 1;
@@ -168,7 +168,6 @@ document.getElementById("pending").addEventListener("click", function () {
 
 
 function getTasks() {
-    // Task'lerimiz LocalStorage'de TaskList adında bir key'in içinde tutulacak.
     let TaskListItem = localStorage.getItem("TaskList");
 
     if (TaskListItem != null) {
@@ -184,4 +183,3 @@ function setTasks() {
 getTasks();
 assignSpansEvents();
 displayTasks(filterMode);
-/
