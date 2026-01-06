@@ -15,11 +15,3 @@ Kullanıcıların günlük görevlerini takip etmek için basit bir arayüz sağ
 - Basit CRUD fonksiyonelliği  
 - Kullanıcı odaklı listeleme
 
-🧪 Kullanılan Teknolojiler
-- React/JavaScript (veya ne kullandıysan)
-- HTML/CSS
-
-📌 Kurulum
-1. Git clone …  
-2. npm install  
-3. npm start
